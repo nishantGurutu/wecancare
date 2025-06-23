@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardRequestScreen extends StatefulWidget {
   const CardRequestScreen({super.key});
@@ -17,27 +18,27 @@ class _CardRequestScreenState extends State<CardRequestScreen> {
           // Header
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            decoration: const BoxDecoration(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
+            decoration: BoxDecoration(
               color: Color(0xFF1F266A),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(25),
+                bottomLeft: Radius.circular(25.r),
+                bottomRight: Radius.circular(25.r),
               ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
                   'My Care Request',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 CircleAvatar(
-                  radius: 18,
+                  radius: 18.r,
                   backgroundColor: Colors.white,
                   child: Icon(Icons.add, color: Color(0xFF1F266A)),
                 ),
@@ -113,8 +114,7 @@ class _CardRequestScreenState extends State<CardRequestScreen> {
                     minimumSize: const Size(0, 0), // remove min constraints
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -126,7 +126,11 @@ class _CardRequestScreenState extends State<CardRequestScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.black54),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 14,
+                        color: Colors.black54,
+                      ),
                     ],
                   ),
                 ),
