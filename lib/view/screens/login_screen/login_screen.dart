@@ -1,9 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vcancare/view/screens/otp_screen/otp_screen.dart';
-import 'package:vcancare/widgets/background_design/background_design.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../widgets/common_button/common_button.dart';
 import '../../../widgets/common_textfield/common_textfield.dart';

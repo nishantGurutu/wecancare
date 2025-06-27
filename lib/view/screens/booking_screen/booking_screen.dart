@@ -18,59 +18,77 @@ class _BookingsScreenState extends State<BookingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF1F6FF),
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            width: double.infinity,
-            height: 110,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            decoration: const BoxDecoration(
-              color: Color(0xFF1F266A),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(25),
+          Column(
+            children: [
+              // Top Header
+              Container(
+                width: double.infinity,
+                height: 110,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 40,
+                ),
+                decoration: const BoxDecoration(
+                  color: Color(0xFF1F266A),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.arrow_back, color: Color(0xFF1F266A)),
+                    ),
+                    Text(
+                      'MY Bookings',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.notifications_none,
+                        color: Color(0xFF1F266A),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                CircleAvatar(
-                  radius: 18,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.arrow_back, color: Color(0xFF1F266A)),
+
+              const SizedBox(height: 60),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    bookingCard(title: "Active Care Session", isActive: true),
+                    const SizedBox(height: 10),
+                    bookingCard(title: "Upcoming Session", isActive: false),
+                  ],
                 ),
-                Text(
-                  'MY Bookings',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                CircleAvatar(
-                  radius: 18,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.notifications_none,
-                    color: Color(0xFF1F266A),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
+
           Positioned(
-            top: 80,
+            top: 90,
             left: 20,
             right: 20,
             child: Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  100,
-                ), // Large enough for a circle
+                borderRadius: BorderRadius.circular(100),
               ),
               elevation: 2,
               child: Container(
-                width: 320,
                 height: 70,
                 decoration: BoxDecoration(
                   color: Color(0xFFF9A825),
@@ -103,17 +121,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
                   ),
                 ),
               ),
-            ),
-          ),
-
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(10),
-              children: [
-                bookingCard(title: "Active Care Session", isActive: true),
-                const SizedBox(height: 10),
-                bookingCard(title: "Upcoming Session", isActive: false),
-              ],
             ),
           ),
         ],

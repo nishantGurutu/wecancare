@@ -34,14 +34,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF1F6FF),
-       body:
-      Column(
+      body: Column(
         children: [
           Expanded(
-            child: IndexedStack(
-              index: _currentIndex,
-              children: _screens,
-            ),
+            child: IndexedStack(index: _currentIndex, children: _screens),
           ),
         ],
       ),
@@ -56,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
       bottomNavigationBar: BottomAppBar(
         height: 60,
-        shape:  CircularNotchedRectangle(),
+        shape: CircularNotchedRectangle(),
         notchMargin: 8,
         child: SizedBox(
           height: 50,
@@ -70,7 +66,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: Icon(
                       Icons.add_home_sharp,
                       size: 30,
-                      color: _currentIndex == 0 ? const Color(0xFFF9A825) : Colors.grey,
+                      color:
+                          _currentIndex == 0
+                              ? const Color(0xFFF9A825)
+                              : Colors.grey,
                     ),
                     onPressed: () => _onTabSelected(0),
                   ),
@@ -78,7 +77,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: Icon(
                       size: 30,
                       Icons.medical_services_outlined,
-                      color: _currentIndex == 1 ? const Color(0xFFF9A825) : Colors.grey,
+                      color:
+                          _currentIndex == 1
+                              ? const Color(0xFFF9A825)
+                              : Colors.grey,
                     ),
                     onPressed: () => _onTabSelected(1),
                   ),
@@ -92,7 +94,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: Icon(
                       Icons.assignment_outlined,
                       size: 30,
-                      color: _currentIndex == 3 ? const Color(0xFFF9A825) : Colors.grey,
+                      color:
+                          _currentIndex == 3
+                              ? const Color(0xFFF9A825)
+                              : Colors.grey,
                     ),
                     onPressed: () => _onTabSelected(3),
                   ),
@@ -100,7 +105,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: Icon(
                       Icons.person_pin_outlined,
                       size: 30,
-                      color: _currentIndex == 4 ? const Color(0xFFF9A825) : Colors.grey,
+                      color:
+                          _currentIndex == 4
+                              ? const Color(0xFFF9A825)
+                              : Colors.grey,
                     ),
                     onPressed: () => _onTabSelected(4),
                   ),

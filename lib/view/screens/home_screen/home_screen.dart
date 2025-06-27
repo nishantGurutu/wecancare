@@ -38,14 +38,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 CircleAvatar(
                   radius: 18,
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.notifications_none, color: Color(0xFF1F266A)),
+                  child: Icon(
+                    Icons.notifications_none,
+                    color: Color(0xFF1F266A),
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
-
     );
   }
 }
