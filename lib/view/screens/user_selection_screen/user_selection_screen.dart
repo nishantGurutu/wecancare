@@ -4,10 +4,8 @@ import 'package:get/get.dart';
 
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_text_style/app_text_style.dart';
-import '../../../widgets/background_design/background_design.dart';
 import '../../../widgets/common_button/common_button.dart';
 import '../login_screen/login_screen.dart';
-
 
 class UserSelectionScreen extends StatelessWidget {
   const UserSelectionScreen({super.key});
@@ -67,39 +65,70 @@ class UserSelectionScreen extends StatelessWidget {
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 53, horizontal: 10),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 53,
+                              horizontal: 10,
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(18),
-                              border: Border.all(color: Colors.white.withOpacity(0.4)),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.4),
+                              ),
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Text('Choose Your Role to\nContinue', textAlign: TextAlign.center, style: AppTextStyles.normal),
+                                const Text(
+                                  'Choose Your Role to\nContinue',
+                                  textAlign: TextAlign.center,
+                                  style: AppTextStyles.normal,
+                                ),
                                 const SizedBox(height: 20),
                                 CommonButton(
                                   text: "I'm a Nurse",
-                                  onTap: () => Get.to(() => const LoginScreen()),
+                                  onTap:
+                                      () => Get.to(() => const LoginScreen()),
                                   color: AppColors.white,
                                   textColor: AppColors.primary,
                                 ),
                                 const SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(width: 100, child: Divider(color: Colors.grey, thickness: 1)),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text("Or", style: TextStyle(fontWeight: FontWeight.w500, color: Colors.grey)),
-                                  ),
-                                  const SizedBox(width: 100, child: Divider(color: Colors.grey, thickness: 1)),
-                                ],
-                              ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      width: 100,
+                                      child: Divider(
+                                        color: Colors.grey,
+                                        thickness: 1,
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 8.0,
+                                      ),
+                                      child: Text(
+                                        "Or",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 100,
+                                      child: Divider(
+                                        color: Colors.grey,
+                                        thickness: 1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 const SizedBox(height: 12),
                                 CommonButton(
                                   text: "I'm a Patient",
-                                  onTap: () => Get.to(() => const LoginScreen()),
+                                  onTap:
+                                      () => Get.to(() => const LoginScreen()),
                                   color: AppColors.white,
                                   textColor: AppColors.primary,
                                 ),

@@ -1,8 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:vcancare/view/screens/dashboard_screen/dashboard_screen.dart';
+import 'package:vcancare/view/screens/dashboard_screen/bottom_bar.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../widgets/background_design/background_design.dart';
 import '../../../widgets/common_button/common_button.dart';
@@ -59,7 +58,13 @@ class OtpScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('+91 1234567890', style: TextStyle(fontSize: 14, color: AppColors.textDark)),
+                      const Text(
+                        '+91 1234567890',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.textDark,
+                        ),
+                      ),
                       const SizedBox(width: 6),
                       GestureDetector(
                         onTap: () {
@@ -67,7 +72,11 @@ class OtpScreen extends StatelessWidget {
                         },
                         child: const Text(
                           'Edit',
-                          style: TextStyle(fontSize: 14, color: AppColors.primary, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
@@ -108,13 +117,22 @@ class OtpScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Didn't receive the code?", style: TextStyle(color: AppColors.textLight)),
+                      const Text(
+                        "Didn't receive the code?",
+                        style: TextStyle(color: AppColors.textLight),
+                      ),
                       const SizedBox(width: 4),
                       GestureDetector(
                         onTap: () {
                           // TODO: Resend OTP
                         },
-                        child: const Text("Resend", style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w500)),
+                        child: const Text(
+                          "Resend",
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -123,7 +141,8 @@ class OtpScreen extends StatelessWidget {
                   CommonButton(
                     text: "Verify",
                     onTap: () {
-                      Get.to(()=> DashboardScreen());
+                      Get.to(() => CustomBottomBar());
+                      // Get.to(()=> DashboardScreen());
                     },
                     color: AppColors.accent,
                   ),
