@@ -1,155 +1,200 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vcancare/view/screens/dashboard_screen/bottom_bar.dart';
+
+import '../../../controller/auth_controller.dart';
 import '../../../utils/app_colors/app_colors.dart';
-import '../../../widgets/background_design/background_design.dart';
 import '../../../widgets/common_button/common_button.dart';
 
-class OtpScreen extends StatelessWidget {
-  const OtpScreen({super.key});
+class OtpScreen extends StatefulWidget {
+  final String mobile;
+  const OtpScreen({super.key,required this.mobile
+  });
+
+  @override
+  State<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends State<OtpScreen> {
+  final List<TextEditingController> _controllers =
+  List.generate(6, (_) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+
+  final authController = Get.find<AuthController>();
+
+  @override
+  void dispose() {
+    for (var c in _controllers) c.dispose();
+    for (var f in _focusNodes) f.dispose();
+    super.dispose();
+  }
+
+  void _onOtpChanged(String value, int index) {
+    if (value.isNotEmpty && index < 5) {
+      _focusNodes[index + 1].requestFocus();
+    } else if (value.isEmpty && index > 0) {
+      _focusNodes[index - 1].requestFocus();
+    }
+  }
+
+  String _getOtp() {
+    return _controllers.map((c) => c.text).join();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        body: Stack(
-          children: [
-            const BackgroundDesign(),
-
-            Positioned.fill(
-              child: Container(
-                color: AppColors.white.withOpacity(0.1),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: const SizedBox(),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background_image.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 50),
+          child: Column(
+            children: [
+              const SizedBox(height: 80),
+              const Text(
+                'OTP',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textDark,
                 ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
+              const SizedBox(height: 10),
+              const Text(
+                'Enter the verification code sent to',
+                style: TextStyle(fontSize: 14, color: AppColors.textLight),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 40),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: BackButton(color: AppColors.textDark),
+                  Text(
+                    '+91675348728738',
+                    style: const TextStyle(fontSize: 14, color: AppColors.textDark),
                   ),
-                  const SizedBox(height: 40),
-
-                  const Text(
-                    'OTP',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textDark,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-
-                  const Text(
-                    'Enter the verification code sent to',
-                    style: TextStyle(fontSize: 14, color: AppColors.textLight),
-                  ),
-                  const SizedBox(height: 4),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '+91 1234567890',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.textDark,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      GestureDetector(
-                        onTap: () {
-                          // TODO: handle edit
-                        },
-                        child: const Text(
-                          'Edit',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-
-                  // OTP Input Boxes
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(4, (index) {
-                      return SizedBox(
-                        width: 56,
-                        height: 56,
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          decoration: InputDecoration(
-                            counterText: '',
-                            filled: true,
-                            fillColor: AppColors.white,
-                            contentPadding: EdgeInsets.zero,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Didn't receive the code?",
-                        style: TextStyle(color: AppColors.textLight),
-                      ),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: () {
-                          // TODO: Resend OTP
-                        },
-                        child: const Text(
-                          "Resend",
-                          style: TextStyle(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-
-                  CommonButton(
-                    text: "Verify",
+                  const SizedBox(width: 6),
+                  GestureDetector(
                     onTap: () {
-                      Get.to(() => CustomBottomBar());
-                      // Get.to(()=> DashboardScreen());
+                      Get.back();
                     },
-                    color: AppColors.accent,
+                    child: const Text(
+                      'Edit',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 30),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(6, (index) {
+                  return SizedBox(
+                    width: 45,
+                    height: 45,
+                    child: TextField(
+                      controller: _controllers[index],
+                      focusNode: _focusNodes[index],
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      maxLength: 1,
+                      onChanged: (value) => _onOtpChanged(value, index),
+                      decoration: InputDecoration(
+                        counterText: '',
+                        filled: true,
+                        fillColor: AppColors.white,
+                        contentPadding: EdgeInsets.zero,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 1.5,
+                          ),
+                        ),
+                      ),
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+
+              const SizedBox(height: 20),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Didn't receive the code?",
+                    style: TextStyle(color: AppColors.textLight),
+                  ),
+                  const SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () {
+                      // authController.sendOtp(widget.mobile);
+                    },
+                    child: const Text(
+                      "Resend",
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+
+              Obx(() {
+                return authController.isLoading.value
+                    ? const Center(child: CircularProgressIndicator())
+                    :
+                CommonButton(
+                  text: "Verify",
+                  onTap: () async {
+                    String otp = _getOtp();
+                    if (otp.length == 6) {
+                        String deviceId = await authController.getDeviceId();
+                       authController.verifyOtp(
+                         mobile: widget.mobile,
+                         otp: otp,
+                         deviceId: deviceId,
+                         fcmToken: "static_fcm_token_example_12845",
+                         latitude: 28.7041,
+                         longitude: 77.1025,
+                       );
+                     } else {
+                       Get.snackbar("Error", "Please enter a valid 6-digit OTP");
+                    }
+                    Get.to(CustomBottomBar());
+                   },
+                  color: AppColors.accent,
+                );
+              })
+
+
+            ],
+          ),
         ),
       ),
     );

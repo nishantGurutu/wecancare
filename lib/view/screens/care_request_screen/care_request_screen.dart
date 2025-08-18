@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CardRequestScreen extends StatefulWidget {
-  const CardRequestScreen({super.key});
+class CareRequestScreen extends StatefulWidget {
+  const CareRequestScreen({super.key});
 
   @override
-  State<CardRequestScreen> createState() => _CardRequestScreenState();
+  State<CareRequestScreen> createState() => _CareRequestScreenState();
 }
 
-class _CardRequestScreenState extends State<CardRequestScreen> {
+class _CareRequestScreenState extends State<CareRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

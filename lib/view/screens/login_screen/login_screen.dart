@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   GestureDetector(
-                    onTap: () => Get.to(() => const RegistrationScreen()),
+                    onTap: () => Get.to(() =>  RegistrationScreen()),
                     child: const Text(
                       "Sign Up",
                       style: TextStyle(
@@ -73,7 +73,7 @@ class LoginScreen extends StatelessWidget {
               CommonButton(
                 text: "Login",
                 onTap: () {
-                  Get.to(() => OtpScreen());
+                  Get.to(() => OtpScreen(mobile: '',));
                 },
                 color: AppColors.accent,
               ),

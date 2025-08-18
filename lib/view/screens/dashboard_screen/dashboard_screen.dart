@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:vcancare/view/screens/card_request_screen/card_request_screen.dart';
 import 'package:vcancare/view/screens/post_requirement_screen/post_requirement_screen.dart';
 
 import '../booking_screen/booking_screen.dart';
+import '../care_request_screen/care_request_screen.dart';
 import '../home_screen/home_screen.dart';
 import '../user_profile_screen/user_profile_screen.dart';
 
@@ -18,7 +18,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final List<Widget> _screens = const [
     HomeScreen(),
-    CardRequestScreen(),
+    CareRequestScreen(),
     PostRequirementScreen(),
     BookingsScreen(),
     UserProfileScreen(),

@@ -15,6 +15,8 @@ class CommonTextField extends StatelessWidget {
   final Color? hintTextColor;
   final FontWeight? hintFontWeight;
 
+  final TextEditingController? controller;
+
   const CommonTextField({
     super.key,
     required this.hintText,
@@ -29,11 +31,13 @@ class CommonTextField extends StatelessWidget {
     this.hintFontSize,
     this.hintTextColor,
     this.hintFontWeight,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       onChanged: onChanged,
       keyboardType: keyboardType,
       decoration: InputDecoration(

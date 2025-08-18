@@ -3,10 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:vcancare/view/screens/booking_screen/booking_screen.dart';
-import 'package:vcancare/view/screens/card_request_screen/card_request_screen.dart';
 import 'package:vcancare/view/screens/home_screen/home_screen.dart';
+import 'package:vcancare/view/screens/my_birds_screen/my_birds_screen.dart';
 import 'package:vcancare/view/screens/post_requirement_screen/post_requirement_screen.dart';
 import 'package:vcancare/view/screens/user_profile_screen/user_profile_screen.dart';
+
+import '../care_request_screen/nurse_care_request_screen.dart';
+import '../nurse_profile_screen/nurse_profile_screen.dart';
 
 class CustomBottomBar extends StatefulWidget {
   @override
@@ -18,10 +21,10 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 
   final List<Widget> _screens = const [
     HomeScreen(),
-    CardRequestScreen(),
+    NurseCareRequestsScreen(),
     PostRequirementScreen(),
-    BookingsScreen(),
-    UserProfileScreen(),
+    MyBidsScreen(),
+    MyProfileScreen(),
   ];
 
   @override
@@ -83,7 +86,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      Icons.fingerprint,
+                      Icons.add,
                       color: Colors.white,
                       size: 28,
                     ),
@@ -120,10 +123,14 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(isSelected ? activeImage : svgPicture),
+            SvgPicture.asset(
+              isSelected ? activeImage : svgPicture,
+              height: 22.h,
+              width: 22.w,
+            ),
             if (isSelected)
               Container(
-                margin: EdgeInsets.only(top: 2),
+                margin: const EdgeInsets.only(top: 2),
                 width: 6.w,
                 height: 6.h,
                 decoration: BoxDecoration(
