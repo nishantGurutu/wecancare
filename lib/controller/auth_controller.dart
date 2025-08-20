@@ -1,19 +1,21 @@
 import 'dart:io';
-
+import 'dart:convert';
+import 'package:android_id/android_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 import '../modals/registred_modal.dart';
 import '../view/screens/dashboard_screen/bottom_bar.dart';
 import '../view/screens/otp_screen/otp_screen.dart';
+import '../view/screens/registration_screen/registration_screen.dart';
 
 class AuthController extends GetxController {
   var isLoading = false.obs;
   var message = ''.obs;
+
   final String fcmToken = "your_static_fcm_token_here";
   final double latitude = 28.7041;
   final double longitude = 77.1025;
@@ -48,11 +50,12 @@ class AuthController extends GetxController {
 
       if (res.status) {
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isLoggedIn', true);
+        await prefs.setBool('isLoggedIn', false);
 
         registeredMobile = mobile;
         Get.snackbar('Success', res.message);
-        Get.to(() => OtpScreen(mobile: mobile));
+        debugPrint("Navigating to OTP screen from register()");
+        Get.to(() => OtpScreen(mobile: mobile, userType: 'NURSE'));
       } else {
         Get.snackbar('Error', res.message);
       }
@@ -64,24 +67,32 @@ class AuthController extends GetxController {
   }
 
   /// Send OTP
-  Future<void> sendOtp(String mobile) async {
+  Future<void> sendOtp(String mobile, String userType) async {
     isLoading.value = true;
     try {
       var response = await http.post(
         Uri.parse("https://milssi.in/public/api/auth/send-otp"),
         headers: {"Accept": "application/json"},
         body: {"mobile": mobile},
-      );
+      ).timeout(const Duration(seconds: 15));
 
       var data = jsonDecode(response.body);
       debugPrint("Send OTP Response: $data");
 
-      if (response.statusCode == 200 && data['status'] == true) {
-        Get.snackbar("Success", "OTP sent successfully");
-        Get.to(CustomBottomBar());
+      if (response.statusCode == 200) {
+        if (data['message'] != null && data['message'].toString().contains("OTP sent")) {
+          Get.snackbar("Success", data['message']);
+          registeredMobile = mobile;
+          debugPrint("Navigating to OTP screen from sendOtp()");
+          Get.to(() => OtpScreen(mobile: mobile, userType: userType));
+        } else {
+          Get.snackbar("Error", data['message'] ?? "Failed to send OTP");
+        }
       } else {
-        Get.snackbar("Error", data['message'] ?? "Failed to send OTP");
+        Get.snackbar("Error", "Server Error: ${response.statusCode}");
       }
+    } on SocketException {
+      Get.snackbar("Network Error", "Please check your internet connection");
     } catch (e) {
       Get.snackbar("Error", "Something went wrong: $e");
     } finally {
@@ -89,25 +100,25 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Verify OTP
   Future<void> verifyOtp({
     required String mobile,
     required String otp,
-    String? deviceId,
-    String? fcmToken,
-    double? latitude,
-    double? longitude,
+    required String fcmToken,
+    required double latitude,
+    required double longitude,
+    required String userType,
   }) async {
     isLoading.value = true;
     try {
-      String deviceId = await getDeviceId();
 
       Map<String, String> body = {
         'mobile': mobile,
         'otp': otp,
-        'device_id': deviceId,
-        'fcm_token': fcmToken.toString(),
+        'fcm_token': fcmToken,
         'latitude': latitude.toString(),
         'longitude': longitude.toString(),
+        'user_type': userType,
       };
 
       var response = await http.post(
@@ -120,8 +131,12 @@ class AuthController extends GetxController {
       debugPrint("Verify OTP Response: $data");
 
       if (response.statusCode == 200 && data['status'] == true) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+
         Get.snackbar("Success", data['message'] ?? "OTP Verified");
-        Get.offAll(() =>  CustomBottomBar());
+        debugPrint("Navigating to Dashboard from verifyOtp()");
+        Get.offAll(() => CustomBottomBar());
       } else {
         Get.snackbar("Error", data['message'] ?? "Invalid or expired OTP");
       }
@@ -132,16 +147,16 @@ class AuthController extends GetxController {
     }
   }
 
-
+  /// Get Device ID
   Future<String> getDeviceId() async {
-    final deviceInfo = DeviceInfoPlugin();
-    String deviceId = "";
+    String deviceId = "unknown_device";
 
     try {
       if (Platform.isAndroid) {
-        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        deviceId = androidInfo.id ?? "";
+        const androidIdPlugin = AndroidId();
+        deviceId = await androidIdPlugin.getId() ?? "";
       } else if (Platform.isIOS) {
+        final deviceInfo = DeviceInfoPlugin();
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
         deviceId = iosInfo.identifierForVendor ?? "";
       } else {
@@ -153,8 +168,4 @@ class AuthController extends GetxController {
 
     return deviceId;
   }
-
 }
-
-
-

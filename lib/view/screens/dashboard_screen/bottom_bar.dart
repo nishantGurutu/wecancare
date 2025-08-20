@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:vcancare/view/screens/booking_screen/booking_screen.dart';
-import 'package:vcancare/view/screens/home_screen/home_screen.dart';
+import 'package:vcancare/view/screens/home_screen/nurse_home_screen.dart';
 import 'package:vcancare/view/screens/my_birds_screen/my_birds_screen.dart';
 import 'package:vcancare/view/screens/post_requirement_screen/post_requirement_screen.dart';
-import 'package:vcancare/view/screens/user_profile_screen/user_profile_screen.dart';
 
 import '../care_request_screen/nurse_care_request_screen.dart';
 import '../nurse_profile_screen/nurse_profile_screen.dart';
@@ -19,11 +17,11 @@ class CustomBottomBar extends StatefulWidget {
 class _CustomBottomBarState extends State<CustomBottomBar> {
   RxInt selectedIndex = 0.obs;
 
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    NurseCareRequestsScreen(),
-    PostRequirementScreen(),
-    MyBidsScreen(),
+  final List<Widget> _screens = [
+    const NurseHomeScreen(),
+    const NurseCareRequestsScreen(),
+    const PostRequirementScreen(),
+    const MyBidsScreen(),
     MyProfileScreen(),
   ];
 
@@ -76,13 +74,13 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    selectedIndex.value = 2;
+                    // selectedIndex.value = 2;
                   },
                   child: Container(
                     height: 53.h,
                     width: 55.w,
                     decoration: BoxDecoration(
-                      color: Colors.indigo.shade900,
+                      color: Color(0xFF1B263B),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -127,14 +125,15 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
               isSelected ? activeImage : svgPicture,
               height: 22.h,
               width: 22.w,
+              color: isSelected ?  Color(0xFF1B263B) : Colors.grey,
             ),
             if (isSelected)
               Container(
                 margin: const EdgeInsets.only(top: 2),
                 width: 6.w,
                 height: 6.h,
-                decoration: BoxDecoration(
-                  color: Colors.indigo.shade900,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF1B263B),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -143,4 +142,5 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       ),
     );
   }
+
 }

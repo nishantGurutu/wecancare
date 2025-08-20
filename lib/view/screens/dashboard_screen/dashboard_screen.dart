@@ -3,7 +3,7 @@ import 'package:vcancare/view/screens/post_requirement_screen/post_requirement_s
 
 import '../booking_screen/booking_screen.dart';
 import '../care_request_screen/care_request_screen.dart';
-import '../home_screen/home_screen.dart';
+import '../home_screen/nurse_home_screen.dart';
 import '../user_profile_screen/user_profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = const [
-    HomeScreen(),
+    NurseHomeScreen(),
     CareRequestScreen(),
     PostRequirementScreen(),
     BookingsScreen(),
@@ -68,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       size: 30,
                       color:
                           _currentIndex == 0
-                              ? const Color(0xFFF9A825)
+                              ?  Colors.grey
                               : Colors.grey,
                     ),
                     onPressed: () => _onTabSelected(0),
@@ -79,7 +79,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Icons.medical_services_outlined,
                       color:
                           _currentIndex == 1
-                              ? const Color(0xFFF9A825)
+                              ? Colors.grey
                               : Colors.grey,
                     ),
                     onPressed: () => _onTabSelected(1),
@@ -96,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       size: 30,
                       color:
                           _currentIndex == 3
-                              ? const Color(0xFFF9A825)
+                              ? Colors.grey
                               : Colors.grey,
                     ),
                     onPressed: () => _onTabSelected(3),
@@ -107,7 +107,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       size: 30,
                       color:
                           _currentIndex == 4
-                              ? const Color(0xFFF9A825)
+                              ? Colors.grey
                               : Colors.grey,
                     ),
                     onPressed: () => _onTabSelected(4),

@@ -8,7 +8,12 @@ import '../../../widgets/common_button/common_button.dart';
 
 class OtpScreen extends StatefulWidget {
   final String mobile;
-  const OtpScreen({super.key,required this.mobile
+  final String userType;
+
+  const OtpScreen({
+    super.key,
+    required this.mobile,
+    required this.userType,
   });
 
   @override
@@ -76,7 +81,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '+91675348728738',
+                    widget.mobile,
                     style: const TextStyle(fontSize: 14, color: AppColors.textDark),
                   ),
                   const SizedBox(width: 6),
@@ -151,7 +156,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   const SizedBox(width: 4),
                   GestureDetector(
                     onTap: () {
-                      // authController.sendOtp(widget.mobile);
+                      authController.sendOtp(widget.mobile,widget.userType);
                     },
                     child: const Text(
                       "Resend",
@@ -168,31 +173,26 @@ class _OtpScreenState extends State<OtpScreen> {
               Obx(() {
                 return authController.isLoading.value
                     ? const Center(child: CircularProgressIndicator())
-                    :
-                CommonButton(
+                    : CommonButton(
                   text: "Verify",
                   onTap: () async {
                     String otp = _getOtp();
                     if (otp.length == 6) {
-                        String deviceId = await authController.getDeviceId();
-                       authController.verifyOtp(
-                         mobile: widget.mobile,
-                         otp: otp,
-                         deviceId: deviceId,
-                         fcmToken: "static_fcm_token_example_12845",
-                         latitude: 28.7041,
-                         longitude: 77.1025,
-                       );
-                     } else {
-                       Get.snackbar("Error", "Please enter a valid 6-digit OTP");
+                      authController.verifyOtp(
+                        mobile: widget.mobile,
+                        otp: otp,
+                        fcmToken: "static_fcm_token_example_12875",
+                        latitude: 28.7041,
+                        longitude: 77.1025,
+                        userType: widget.userType,
+                      );
+                    } else {
+                      Get.snackbar("Error", "Please enter a valid 6-digit OTP");
                     }
-                    Get.to(CustomBottomBar());
-                   },
+                  },
                   color: AppColors.accent,
                 );
-              })
-
-
+              }),
             ],
           ),
         ),

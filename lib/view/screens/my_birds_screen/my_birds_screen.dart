@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyBidsScreen extends StatefulWidget {
   const MyBidsScreen({super.key});
@@ -14,6 +15,8 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
     {"status": "Accepted", "color": Colors.green},
     {"status": "Pending", "color": Colors.orange},
     {"status": "Rejected", "color": Colors.red},
+    {"status": "Pending", "color": Colors.orange},
+    {"status": "Accepted", "color": Colors.green},
   ];
 
   @override
@@ -22,19 +25,39 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
       backgroundColor: const Color(0xFFF4F6FA),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xFF1F266A),
-          elevation: 0,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFD64541),
+                Color(0xFF007BA7),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
           ),
-          flexibleSpace: SafeArea(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: SafeArea(
             child: Row(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: () {},
+                CircleAvatar(
+                  radius: 16,
+                  backgroundColor: Colors.white,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.black87,
+                      size: 17,
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
                 ),
                 const Expanded(
                   child: Center(
@@ -48,9 +71,18 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.notifications_none, color: Colors.white),
-                  onPressed: () {},
+                CircleAvatar(
+                  radius: 16,
+                  backgroundColor: Colors.white,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(
+                      Icons.notifications_none,
+                      color: Colors.black87,
+                      size: 17,
+                    ),
+                    onPressed: () {},
+                  ),
                 ),
               ],
             ),
@@ -75,11 +107,11 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
           ),
           const SizedBox(height: 10),
 
-          // List
+          // Filtered List
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(12),
-              children: bids
+              children: _getFilteredBids()
                   .map((bid) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: _buildBidCard(
@@ -95,6 +127,7 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
     );
   }
 
+  /// Tab Button Widget
   Widget _buildTabButton(String title, int index) {
     bool isActive = selectedTab == index;
     return GestureDetector(
@@ -106,10 +139,10 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isActive ?  Colors.blue : Colors.white,
+          color: isActive ? const Color(0xFF007BA7) : Colors.white,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isActive ?  Colors.blue : Colors.grey.shade300,
+            color: isActive ? const Color(0xFF007BA7) : Colors.grey.shade300,
           ),
         ),
         child: Text(
@@ -124,6 +157,25 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
     );
   }
 
+  /// Returns filtered bids
+  List<Map<String, dynamic>> _getFilteredBids() {
+    if (selectedTab == 0) {
+      // All
+      return bids;
+    } else if (selectedTab == 1) {
+      // Pending
+      return bids.where((bid) => bid["status"] == "Pending").toList();
+    } else if (selectedTab == 2) {
+      // Accepted
+      return bids.where((bid) => bid["status"] == "Accepted").toList();
+    } else if (selectedTab == 3) {
+      // Rejected
+      return bids.where((bid) => bid["status"] == "Rejected").toList();
+    }
+    return bids;
+  }
+
+  /// Bid Card UI
   Widget _buildBidCard({
     required String status,
     required Color statusColor,
@@ -200,7 +252,8 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
               ),
               const SizedBox(width: 8),
               // View Details Button
-              _smallActionButton("View Details", textColor: Color(0xFF1F266A), Colors.blue),
+              _smallActionButton("View Details", const Color(0xFF007BA7),
+                  textColor: const Color(0xFF007BA7)),
               const SizedBox(width: 8),
               // Cancel Bid Button
               _smallActionButton("Cancel Bid", Colors.red),
@@ -211,7 +264,9 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
     );
   }
 
-  Widget _smallActionButton(String text, Color borderColor, {Color? textColor}) {
+  /// Small action button
+  Widget _smallActionButton(String text, Color borderColor,
+      {Color? textColor}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
@@ -232,5 +287,4 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
       ),
     );
   }
-
 }

@@ -1,4 +1,13 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:http/http.dart' as http;
+import 'package:vcancare/view/screens/nurse_profile_screen/update_nurse_profile.dart';
+
+import '../../../controller/profile_controller.dart';
 
 class MyProfileScreen extends StatelessWidget {
   const MyProfileScreen({super.key});
@@ -17,20 +26,39 @@ class MyProfileScreen extends StatelessWidget {
                 Container(
                   height: 110,
                   decoration: const BoxDecoration(
-                    color: Color(0xFF1F266A),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFFD64541),
+                        Color(0xFF007BA7),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(24),
-                      bottomRight: Radius.circular(24),
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
                     ),
                   ),
+
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: SafeArea(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back, color: Colors.white),
-                          onPressed: () {},
+                        CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.black87,
+                              size: 17,
+                            ),
+                            onPressed: () {
+                              Get.back();
+                            },
+                          ),
                         ),
                         const Text(
                           "My Profile",
@@ -40,9 +68,18 @@ class MyProfileScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.notifications_none, color: Colors.white),
-                          onPressed: () {},
+                        CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(
+                              Icons.notifications_none,
+                              color: Colors.black87,
+                              size: 17,
+                            ),
+                            onPressed: () {},
+                          ),
                         ),
                       ],
                     ),
@@ -78,8 +115,8 @@ class MyProfileScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
+                color: Color(0xFF007BA7),
+                // decoration: TextDecoration.underline,
               ),
             ),
             const SizedBox(height: 6),
@@ -120,7 +157,22 @@ class MyProfileScreen extends StatelessWidget {
 
             buildSectionTitle("Contact info"),
             buildInfoCard(
-              onEdit: () {},
+              onEdit: () {
+                _showEditBottomSheet(context, "Contact Info", [
+                  {
+                    "label": "Phone",
+                    "controller": TextEditingController(text: "+91 9876543210"),
+                  },
+                  {
+                    "label": "Email",
+                    "controller": TextEditingController(text: "aparna@example.com"),
+                  },
+                  {
+                    "label": "Address",
+                    "controller": TextEditingController(text: "Schoolst, Palam Vihar Sector 3, Gurugram, Haryana"),
+                  },
+                ]);
+              },
               items: [
                 buildInfoRow(Icons.phone, "+91 9876543210"),
                 buildInfoRow(Icons.email, "aparna@example.com"),
@@ -129,10 +181,17 @@ class MyProfileScreen extends StatelessWidget {
               ],
             ),
 
-            // Professional Info
+
             buildSectionTitle("Professional info"),
             buildInfoCard(
-              onEdit: () {},
+              onEdit: () {
+                _showEditBottomSheet(context, "Professional Info", [
+                  {"label": "Qualification", "controller": TextEditingController(text: "BSc Nursing")},
+                  {"label": "Experience", "controller": TextEditingController(text: "5 Years")},
+                  {"label": "Rate", "controller": TextEditingController(text: "₹900/day")},
+                  {"label": "Availability", "controller": TextEditingController(text: "Mon-Fri: 10 AM - 6 PM")},
+                ]);
+              },
               items: [
                 buildInfoRow(Icons.school, "Qualifications: BSc Nursing"),
                 buildInfoRow(Icons.work, "Experience: 5 Years"),
@@ -140,6 +199,7 @@ class MyProfileScreen extends StatelessWidget {
                 buildInfoRow(Icons.access_time, "Mon-Fri: 10 AM - 6 PM"),
               ],
             ),
+
 
             // Documents
             buildSectionTitle("Documents"),
@@ -150,16 +210,28 @@ class MyProfileScreen extends StatelessWidget {
                 buildInfoRow(Icons.insert_drive_file, "ID Proof"),
                 buildInfoRow(Icons.insert_drive_file, "Certificates"),
                 const SizedBox(height: 8),
-                Row(
-                  children: const [
-                    Icon(Icons.upload_file, size: 18, color: Colors.blue),
-                    SizedBox(width: 12),
-                    Text("Upload New Document",
-                        style: TextStyle(fontSize: 14, color: Colors.blue)),
-                  ],
+                GestureDetector(
+                  onTap: () async {
+                    FilePickerResult? result =
+                    await FilePicker.platform.pickFiles(type: FileType.any);
+                    if (result != null) {
+                      File file = File(result.files.single.path!);
+                    }
+                  },
+                  child: Row(
+                    children: const [
+                      Icon(Icons.upload_file, size: 18, color: Colors.blue),
+                      SizedBox(width: 12),
+                      Text(
+                        "Upload New Document",
+                        style: TextStyle(fontSize: 14, color: Colors.blue),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
+
 
             // Bank Details
             buildSectionTitle("Bank Details"),
@@ -178,8 +250,8 @@ class MyProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Column(
                 children: [
-                  buildLinkTile(Icons.help, "FAQs", Colors.orange),
-                  buildLinkTile(Icons.support_agent, "Contact Support", Colors.orange),
+                  buildLinkTile(Icons.help, "FAQs", Color(0xFF007BA7)),
+                  buildLinkTile(Icons.support_agent, "Contact Support", Color(0xFF007BA7)),
                 ],
               ),
             ),
@@ -187,13 +259,15 @@ class MyProfileScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             // Quick Links
+            buildSectionTitle("Quick Links"),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Column(
                 children: [
-                  buildLinkTile(Icons.logout, "Logout", Colors.orange),
-                  buildLinkTile(Icons.description, "Terms & Condition", Colors.orange),
-                  buildLinkTile(Icons.privacy_tip, "Privacy Policy", Colors.blue),
+                  buildLinkTile(Icons.logout, "Logout", Color(0xFF007BA7)),
+                  buildLinkTile(Icons.description, "Terms & Condition", Color(0xFF007BA7)),
+                  buildLinkTile(Icons.privacy_tip, "Privacy Policy", Color(0xFF007BA7)),
                 ],
               ),
             ),
@@ -206,13 +280,16 @@ class MyProfileScreen extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0xFF007BA7),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 10),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => const UpdateNurseProfileScreen());
+                  },
+
                   child: const Text(
                     "Update",
                     style: TextStyle(color: Colors.white, fontSize: 16),
@@ -237,7 +314,7 @@ class MyProfileScreen extends StatelessWidget {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF1F266A),
+            color: Colors.black87,
           ),
         ),
       ),
@@ -245,7 +322,6 @@ class MyProfileScreen extends StatelessWidget {
   }
 
 
-  // Info Card (content only + top-right edit)
   static Widget buildInfoCard({
     required List<Widget> items,
     VoidCallback? onEdit,
@@ -277,14 +353,13 @@ class MyProfileScreen extends StatelessWidget {
     );
   }
 
-  // Row with icon and text
   static Widget buildInfoRow(IconData icon, String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 18, color: Colors.indigo),
+          Icon(icon, size: 18, color: Color(0xFF007BA7)),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
@@ -297,7 +372,6 @@ class MyProfileScreen extends StatelessWidget {
     );
   }
 
-  // ListTile with arrow for links
   static Widget buildLinkTile(IconData icon, String title, Color iconColor) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
@@ -307,4 +381,78 @@ class MyProfileScreen extends StatelessWidget {
       onTap: () {},
     );
   }
+
+
+  void _showEditBottomSheet(BuildContext context, String section, List<Map<String, dynamic>> fields) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Edit $section",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Dynamic TextFields
+              ...fields.map((field) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: TextField(
+                    controller: field["controller"],
+                    decoration: InputDecoration(
+                      labelText: field["label"],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+
+              const SizedBox(height: 10),
+              SafeArea(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF007BA7),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Save", style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+
+
+
 }

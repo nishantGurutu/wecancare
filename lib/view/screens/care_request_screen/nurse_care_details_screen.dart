@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class CareRequestDetailsScreen extends StatelessWidget {
   const CareRequestDetailsScreen({super.key});
@@ -7,33 +9,70 @@ class CareRequestDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF3F6FB),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1F266A),
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: const Text(
-          'Care Request Details',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
+      appBar:PreferredSize(
+        preferredSize: const Size.fromHeight(90),
+        child: Container(
+          height: 100,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFD64541),
+                Color(0xFF007BA7),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
           ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.white),
-            onPressed: () {},
-          )
-        ],
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.black87,
+                        size: 17,
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  ),
+                  const Spacer(),
+                  const Text(
+                    "Care Requests Details",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const Spacer(),
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(
+                        Icons.notifications_none,
+                        color: Colors.black87,
+                        size: 17,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -260,9 +299,11 @@ class CareRequestDetailsScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _showResponseDialog(context);
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF3AB6FF),
+                    backgroundColor: const Color(0xFF007BA7),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -279,6 +320,7 @@ class CareRequestDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
+
           ],
         ),
       ),
@@ -350,4 +392,250 @@ class CareRequestDetailsScreen extends StatelessWidget {
       ),
     );
   }
+  // void _showResponseDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return Dialog(
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(20),
+  //         ),
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(20),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               // Close Button
+  //               Align(
+  //                 alignment: Alignment.topRight,
+  //                 child: GestureDetector(
+  //                   onTap: () => Navigator.pop(context),
+  //                   child: const Icon(Icons.close, size: 22, color: Colors.grey),
+  //                 ),
+  //               ),
+  //               const SizedBox(height: 8),
+  //
+  //               // Success Icon
+  //               Container(
+  //                 padding: const EdgeInsets.all(16),
+  //                 decoration: BoxDecoration(
+  //                   shape: BoxShape.circle,
+  //                   gradient: const LinearGradient(
+  //                     colors: [Color(0xFF4CAF50), Color(0xFF66BB6A)],
+  //                     begin: Alignment.topLeft,
+  //                     end: Alignment.bottomRight,
+  //                   ),
+  //                 ),
+  //                 child: const Icon(Icons.check, color: Colors.white, size: 32),
+  //               ),
+  //
+  //               const SizedBox(height: 16),
+  //
+  //               // Title
+  //               const Text(
+  //                 "Response Submitted!",
+  //                 style: TextStyle(
+  //                   fontSize: 18,
+  //                   fontWeight: FontWeight.bold,
+  //                   color: Colors.black87,
+  //                 ),
+  //               ),
+  //               const SizedBox(height: 8),
+  //
+  //               // Subtitle
+  //               const Text(
+  //                 "Please wait for patient’s response.\nYou will be notified shortly.",
+  //                 textAlign: TextAlign.center,
+  //                 style: TextStyle(
+  //                   fontSize: 14,
+  //                   color: Colors.black54,
+  //                   height: 1.4,
+  //                 ),
+  //               ),
+  //
+  //               const SizedBox(height: 20),
+  //
+  //               // View Booking Button
+  //               GestureDetector(
+  //                 onTap: () {
+  //                   Navigator.pop(context);
+  //                   Navigator.push(
+  //                     context,
+  //                     MaterialPageRoute(
+  //                       builder: (_) => const CareRequestDetailsScreen(),
+  //                     ),
+  //                   );
+  //                 },
+  //                 child: Container(
+  //                   padding: const EdgeInsets.symmetric(
+  //                       vertical: 12, horizontal: 20),
+  //                   decoration: BoxDecoration(
+  //                     borderRadius: BorderRadius.circular(30),
+  //                     gradient: const LinearGradient(
+  //                       colors: [Color(0xFFD64541), Color(0xFF007BA7)],
+  //                       begin: Alignment.centerLeft,
+  //                       end: Alignment.centerRight,
+  //                     ),
+  //                   ),
+  //                   child: const Text(
+  //                     "View Booking Details",
+  //                     style: TextStyle(
+  //                       fontSize: 14,
+  //                       fontWeight: FontWeight.w600,
+  //                       color: Colors.white,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //               const SizedBox(height: 12),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+  void _showResponseDialog(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierLabel: '',
+      transitionDuration: const Duration(milliseconds: 400),
+      pageBuilder: (context, anim1, anim2) {
+        return const SizedBox.shrink();
+      },
+      transitionBuilder: (context, anim1, anim2, child) {
+        return Transform.scale(
+          scale: Curves.easeOutBack.transform(anim1.value),
+          child: Opacity(
+            opacity: anim1.value,
+            child: Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Close Button
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: const Icon(Icons.close,
+                            size: 22, color: Colors.grey),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+
+                    TweenAnimationBuilder<double>(
+                      duration: const Duration(milliseconds: 600),
+                      tween: Tween(begin: 0.8, end: 1.0),
+                      curve: Curves.elasticOut,
+                      builder: (context, value, child) {
+                        return Transform.scale(
+                          scale: value,
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF4CAF50), Color(0xFF66BB6A)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.green.withOpacity(0.4),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                ),
+                              ],
+                            ),
+                            child: const Icon(Icons.check,
+                                color: Colors.white, size: 32),
+                          ),
+                        );
+                      },
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Title
+                    const Text(
+                      "Response Submitted!",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+
+                    // Subtitle
+                    const Text(
+                      "Please wait for patient’s response.\nYou will be notified shortly.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                        height: 1.4,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // View Booking Button
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const CareRequestDetailsScreen(),
+                          ),
+                        );
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFD64541), Color(0xFF007BA7)],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset(0, 3)),
+                          ],
+                        ),
+                        child: const Text(
+                          "View Booking Details",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }

@@ -88,7 +88,7 @@ class UserSelectionScreen extends StatelessWidget {
                                 CommonButton(
                                   text: "I'm a Nurse",
                                   onTap:
-                                      () => Get.to(() => const LoginScreen()),
+                                      () => Get.to(() =>  LoginScreen(userType: 'NURSE',)),
                                   color: AppColors.white,
                                   textColor: AppColors.primary,
                                 ),
@@ -128,7 +128,7 @@ class UserSelectionScreen extends StatelessWidget {
                                 CommonButton(
                                   text: "I'm a Patient",
                                   onTap:
-                                      () => Get.to(() => const LoginScreen()),
+                                      () => Get.to(() =>  LoginScreen(userType: 'PATIENT',)),
                                   color: AppColors.white,
                                   textColor: AppColors.primary,
                                 ),

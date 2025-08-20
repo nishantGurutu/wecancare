@@ -26,8 +26,18 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
         child: Container(
           height: 100,
           decoration: const BoxDecoration(
-            color: Color(0xFF1F266A),
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFD64541),
+                Color(0xFF007BA7),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
           ),
           child: SafeArea(
             child: Padding(
@@ -133,10 +143,10 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFF3AB6FF) : Colors.white,
+          color: selected ? const Color(0xFF007BA7) : Colors.white,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: selected ? const Color(0xFF3AB6FF) : Colors.transparent,
+            color: selected ? const Color(0xFF007BA7) : Colors.transparent,
             width: 1.5,
           ),
           boxShadow: [
@@ -244,27 +254,27 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: isNew
                   ? [
-                _smallBottomButton("Accept", const Color(0xFF1F266A)),
+                _smallBottomButton("Accept", const Color(0xFF007BA7)),
                 _dividerLine(),
-                _smallBottomButton("Reject", const Color(0xFF1F266A)),
+                _smallBottomButton("Reject", const Color(0xFF007BA7)),
                 _dividerLine(),
                 _smallBottomButton(
                   "View Details",
-                  const Color(0xFF1F266A),
+                  const Color(0xFF007BA7),
                   onTap: () {
                     Get.to(() => const CareRequestDetailsScreen());
                   },
                 ),
               ]
                   : [
-                _smallBottomButton("Response", const Color(0xFF1F266A),
+                _smallBottomButton("Response", const Color(0xFF007BA7),
                     onTap: () {
                       _showCareResponseBottomSheet(context);
                     }),
                 _dividerLine(),
                 _smallBottomButton(
                   "View Details",
-                  const Color(0xFF1F266A),
+                   Color(0xFF007BA7),
                   onTap: () {
                     Get.to(() => const CareRequestDetailsScreen());
                   },
@@ -291,7 +301,7 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w900,
-          color: Color(0xFF1F266A),
+          color: Color(0xFF007BA7),
         ),
       ),
     );
@@ -339,31 +349,6 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
       ),
     );
   }
-
-  // Widget _bottomButton(String label, Color color, {VoidCallback? onTap}) {
-  //   return Expanded(
-  //     child: SizedBox(
-  //       height: 48,
-  //       child: ElevatedButton(
-  //         onPressed: onTap,
-  //         style: ElevatedButton.styleFrom(
-  //           backgroundColor: color,
-  //           shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(12),
-  //           ),
-  //         ),
-  //         child: Text(
-  //           label,
-  //           style: const TextStyle(
-  //             fontSize: 16,
-  //             fontWeight: FontWeight.w600,
-  //             color: Colors.white,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _dividerLine() {
     return Container(
@@ -483,7 +468,7 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:  Colors.blue,
+                        backgroundColor:  Color(0xFF007BA7 ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
