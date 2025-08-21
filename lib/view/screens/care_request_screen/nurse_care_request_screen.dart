@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-
 import 'nurse_care_details_screen.dart';
-
 
 class NurseCareRequestsScreen extends StatefulWidget {
   const NurseCareRequestsScreen({super.key});
@@ -27,10 +24,7 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
           height: 100,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFFD64541),
-                Color(0xFF007BA7),
-              ],
+              colors: [Color(0xFFD64541), Color(0xFF007BA7)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -96,15 +90,21 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _filterButton("Care Type",
-                    selected: selectedIndex == 0,
-                    onTap: () => setState(() => selectedIndex = 0)),
-                _filterButton("Distance",
-                    selected: selectedIndex == 1,
-                    onTap: () => setState(() => selectedIndex = 1)),
-                _filterButton("Time",
-                    selected: selectedIndex == 2,
-                    onTap: () => setState(() => selectedIndex = 2)),
+                _filterButton(
+                  "Care Type",
+                  selected: selectedIndex == 0,
+                  onTap: () => setState(() => selectedIndex = 0),
+                ),
+                _filterButton(
+                  "Distance",
+                  selected: selectedIndex == 1,
+                  onTap: () => setState(() => selectedIndex = 1),
+                ),
+                _filterButton(
+                  "Time",
+                  selected: selectedIndex == 2,
+                  onTap: () => setState(() => selectedIndex = 2),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -135,8 +135,11 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
     );
   }
 
-  Widget _filterButton(String text,
-      {bool selected = false, VoidCallback? onTap}) {
+  Widget _filterButton(
+    String text, {
+    bool selected = false,
+    VoidCallback? onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
@@ -215,28 +218,30 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(FontAwesomeIcons.locationPin,
-                        size: 14, color: Colors.grey[700]),
+                    Icon(
+                      FontAwesomeIcons.locationPin,
+                      size: 14,
+                      color: Colors.grey[700],
+                    ),
                     const SizedBox(width: 5),
                     const Text(
                       "3.2 km away",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black87,
-                      ),
+                      style: TextStyle(fontSize: 14, color: Colors.black87),
                     ),
                     const SizedBox(width: 5),
                     Image.asset(
                       "assets/images/map_logo.png",
                       height: 20,
                       width: 20,
-                      errorBuilder: (_, __, ___) =>
-                      const Icon(Icons.map, size: 18),
+                      errorBuilder:
+                          (_, __, ___) => const Icon(Icons.map, size: 18),
                     ),
                   ],
                 ),
-                _infoRow(FontAwesomeIcons.indianRupeeSign,
-                    "500/day   |   3 sessions total"),
+                _infoRow(
+                  FontAwesomeIcons.indianRupeeSign,
+                  "500/day   |   3 sessions total",
+                ),
                 const SizedBox(height: 4),
                 const Text(
                   "Needs help with medicine and walking",
@@ -252,34 +257,38 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: isNew
-                  ? [
-                _smallBottomButton("Accept", const Color(0xFF007BA7)),
-                _dividerLine(),
-                _smallBottomButton("Reject", const Color(0xFF007BA7)),
-                _dividerLine(),
-                _smallBottomButton(
-                  "View Details",
-                  const Color(0xFF007BA7),
-                  onTap: () {
-                    Get.to(() => const CareRequestDetailsScreen());
-                  },
-                ),
-              ]
-                  : [
-                _smallBottomButton("Response", const Color(0xFF007BA7),
-                    onTap: () {
-                      _showCareResponseBottomSheet(context);
-                    }),
-                _dividerLine(),
-                _smallBottomButton(
-                  "View Details",
-                   Color(0xFF007BA7),
-                  onTap: () {
-                    Get.to(() => const CareRequestDetailsScreen());
-                  },
-                ),
-              ],
+              children:
+                  isNew
+                      ? [
+                        _smallBottomButton("Accept", const Color(0xFF007BA7)),
+                        _dividerLine(),
+                        _smallBottomButton("Reject", const Color(0xFF007BA7)),
+                        _dividerLine(),
+                        _smallBottomButton(
+                          "View Details",
+                          const Color(0xFF007BA7),
+                          onTap: () {
+                            Get.to(() => const CareRequestDetailsScreen());
+                          },
+                        ),
+                      ]
+                      : [
+                        _smallBottomButton(
+                          "Response",
+                          const Color(0xFF007BA7),
+                          onTap: () {
+                            _showCareResponseBottomSheet(context);
+                          },
+                        ),
+                        _dividerLine(),
+                        _smallBottomButton(
+                          "View Details",
+                          Color(0xFF007BA7),
+                          onTap: () {
+                            Get.to(() => const CareRequestDetailsScreen());
+                          },
+                        ),
+                      ],
             ),
           ),
         ],
@@ -291,9 +300,7 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
     return TextButton(
       onPressed: onTap,
       style: TextButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       ),
       child: Text(
@@ -306,7 +313,6 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
       ),
     );
   }
-
 
   Widget _infoRow(IconData icon, String text) {
     return Padding(
@@ -327,7 +333,11 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
   }
 
   Widget _infoRowWithTwoIcons(
-      IconData icon1, String text1, IconData icon2, String text2) {
+    IconData icon1,
+    String text1,
+    IconData icon2,
+    String text2,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
@@ -351,11 +361,7 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
   }
 
   Widget _dividerLine() {
-    return Container(
-      height: 25,
-      width: 1,
-      color: const Color(0xFF1F266A),
-    );
+    return Container(height: 25, width: 1, color: const Color(0xFF1F266A));
   }
 
   void _showCareResponseBottomSheet(BuildContext context) {
@@ -448,8 +454,10 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Padding(
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 14,
+                      ),
                       child: TextField(
                         maxLines: 3,
                         decoration: InputDecoration(
@@ -468,7 +476,7 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:  Color(0xFF007BA7 ),
+                        backgroundColor: Color(0xFF007BA7),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -505,7 +513,7 @@ class _NurseCareRequestsScreenState extends State<NurseCareRequestsScreen> {
               color: Colors.black.withOpacity(0.05),
               blurRadius: 4,
               offset: const Offset(0, 2),
-            )
+            ),
           ],
         ),
         child: Row(

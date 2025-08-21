@@ -8,7 +8,8 @@ class UpdateNurseProfileScreen extends StatefulWidget {
   const UpdateNurseProfileScreen({super.key});
 
   @override
-  State<UpdateNurseProfileScreen> createState() => _UpdateNurseProfileScreenState();
+  State<UpdateNurseProfileScreen> createState() =>
+      _UpdateNurseProfileScreenState();
 }
 
 class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
@@ -18,7 +19,9 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
   final expiryController = TextEditingController(text: "23-06-2038");
   final expController = TextEditingController(text: "5");
   final specializationController = TextEditingController(text: "eccSDCSC");
-  final bioController = TextEditingController(text: "CFCSESEFCefsfAASDASDSDDSD");
+  final bioController = TextEditingController(
+    text: "CFCSESEFCefsfAASDASDSDDSD",
+  );
   final rateController = TextEditingController(text: "56");
 
   File? adharFile;
@@ -27,7 +30,9 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
   Map<String, File> certificateFiles = {};
 
   Future<File?> pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.any);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+    );
     if (result != null) {
       return File(result.files.single.path!);
     }
@@ -38,15 +43,12 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
-      appBar:PreferredSize(
+      appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFFD64541),
-                Color(0xFF007BA7),
-              ],
+              colors: [Color(0xFFD64541), Color(0xFF007BA7)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -119,7 +121,10 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
                         buildTextField("License Number", licenseController),
                         buildTextField("License Expiry Date", expiryController),
                         buildTextField("Years of Experience", expController),
-                        buildTextField("Specialization", specializationController),
+                        buildTextField(
+                          "Specialization",
+                          specializationController,
+                        ),
                         buildTextField("Bio", bioController, maxLines: 3),
                         buildTextField("Hourly Rate", rateController),
                       ],
@@ -131,12 +136,40 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
                   buildInputCard(
                     child: Column(
                       children: [
-                        buildFilePicker("Upload Aadhaar", (file) => setState(() => adharFile = file), adharFile),
-                        buildFilePicker("Upload PAN", (file) => setState(() => panFile = file), panFile),
-                        buildFilePicker("Upload Nursing License", (file) => setState(() => licenseFile = file), licenseFile),
-                        buildFilePicker("Upload 10th Certificate", (file) => setState(() => certificateFiles["tenth"] = file), certificateFiles["tenth"]),
-                        buildFilePicker("Upload 12th Certificate", (file) => setState(() => certificateFiles["twelfth"] = file), certificateFiles["twelfth"]),
-                        buildFilePicker("Upload Degree", (file) => setState(() => certificateFiles["degree"] = file), certificateFiles["degree"]),
+                        buildFilePicker(
+                          "Upload Aadhaar",
+                          (file) => setState(() => adharFile = file),
+                          adharFile,
+                        ),
+                        buildFilePicker(
+                          "Upload PAN",
+                          (file) => setState(() => panFile = file),
+                          panFile,
+                        ),
+                        buildFilePicker(
+                          "Upload Nursing License",
+                          (file) => setState(() => licenseFile = file),
+                          licenseFile,
+                        ),
+                        buildFilePicker(
+                          "Upload 10th Certificate",
+                          (file) =>
+                              setState(() => certificateFiles["tenth"] = file),
+                          certificateFiles["tenth"],
+                        ),
+                        buildFilePicker(
+                          "Upload 12th Certificate",
+                          (file) => setState(
+                            () => certificateFiles["twelfth"] = file,
+                          ),
+                          certificateFiles["twelfth"],
+                        ),
+                        buildFilePicker(
+                          "Upload Degree",
+                          (file) =>
+                              setState(() => certificateFiles["degree"] = file),
+                          certificateFiles["degree"],
+                        ),
                       ],
                     ),
                   ),
@@ -155,39 +188,25 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
                       ),
                       onPressed: () async {
                         FocusScope.of(context).unfocus();
-
-                        // var result = await controller.updateProfile(
-                        //   nurseId: "4",
-                        //   licenseNumber: licenseController.text,
-                        //   licenseExpiryDate: expiryController.text,
-                        //   yearsOfExperience: expController.text,
-                        //   specialization: specializationController.text,
-                        //   hourlyRate: rateController.text,
-                        //   bio: bioController.text,
-                        //   availability: [
-                        //     {"Monday": "10:00AM - 11:00PM"},
-                        //     {"Tuesday": "10:00AM - 11:00PM"},
-                        //   ],
-                        //   adharcard: adharFile,
-                        //   pancard: panFile,
-                        //   nursingLicense: licenseFile,
-                        //   certificates: certificateFiles,
-                        // );
                       },
                       child: Obx(() {
                         return controller.isLoading.value
                             ? const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          ),
-                        )
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
                             : const Text(
-                          "Update Profile",
-                          style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                        );
+                              "Update Profile",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
                       }),
                     ),
                   ),
@@ -213,7 +232,11 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
       padding: const EdgeInsets.only(bottom: 8, top: 10),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
       ),
     );
   }
@@ -222,14 +245,15 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: child,
-      ),
+      child: Padding(padding: const EdgeInsets.all(12.0), child: child),
     );
   }
 
-  Widget buildTextField(String label, TextEditingController controller, {int maxLines = 1}) {
+  Widget buildTextField(
+    String label,
+    TextEditingController controller, {
+    int maxLines = 1,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextField(
@@ -238,7 +262,10 @@ class _UpdateNurseProfileScreenState extends State<UpdateNurseProfileScreen> {
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 10,
+          ),
         ),
       ),
     );
